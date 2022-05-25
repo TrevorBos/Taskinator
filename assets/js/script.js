@@ -1,6 +1,7 @@
 // Global variables
 var formEl = document.querySelector("#task-form");
 var tasksToDoEl = document.querySelector("#tasks-to-do");
+var pageContentEl = document.querySelector("#page-content");
 var taskIdCounter = 0;
 
 //function that creates a new task, gets called in the eventListener below.
@@ -46,17 +47,11 @@ var createTaskEl = function (taskDataObj) {
     taskDataObj.type +
     "</span>";
 
-    var taskActionsEl = createTaskActions(taskIdCounter);
-    listItemEl.appendChild(taskInfoEl);
-    listItemEl.appendChild(taskActionsEl);
+  var taskActionsEl = createTaskActions(taskIdCounter);
+  listItemEl.appendChild(taskInfoEl);
+  listItemEl.appendChild(taskActionsEl);
+  tasksToDoEl.appendChild(listItemEl);
 
-    
-    
-    tasksToDoEl.appendChild(listItemEl);
-
-    
-    
-    
   //Increase the task counter for the next unique id
   taskIdCounter++;
 };
@@ -91,17 +86,31 @@ var createTaskActions = function (taskId) {
   var statusChoices = ["To Do", "In Progress", "Completed"];
 
   for (var i = 0; i < statusChoices.length; i++) {
-  // create option element
-  var statusOptionEl = document.createElement("option");
-  statusOptionEl.textContent = statusChoices[i];
-  statusOptionEl.setAttribute("value", statusChoices[i]);
+    // create option element
+    var statusOptionEl = document.createElement("option");
+    statusOptionEl.textContent = statusChoices[i];
+    statusOptionEl.setAttribute("value", statusChoices[i]);
 
-  // append to select
-  statusSelectEl.appendChild(statusOptionEl);
-}
+    // append to select
+    statusSelectEl.appendChild(statusOptionEl);
+  }
 
-
-   return actionContainerEl;
+  return actionContainerEl;
 };
 
+var taskButtonHandler = function (event) {
+  console.log (event.target)
+
+  if (event.target.matches(".delete-btn")) {
+    var taskId = event.target.getAttribute ("data-task-id");
+    deleteTask(taskId);
+  }
+};
+
+var deleteTask = function(taskId){
+  var taskSelected = document.querySelector(".task-item[data-task-id='" + taskId + "']");
+  taskSelected.remove();
+}
+
 formEl.addEventListener("submit", taskFormHandler);
+pageContentEl.addEventListener ("click", taskButtonHandler);
