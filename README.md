@@ -17,7 +17,7 @@ JavaScript
 
 
 ## Website
-https://trevorbos.github.io/password-generator/
+https://trevorbos.github.io/Taskinator/
 
 ## Contribution
 Made with fingers and a keyboard by Trevor Bos 🖐️
